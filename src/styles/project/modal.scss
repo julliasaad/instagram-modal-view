@@ -1,0 +1,77 @@
+.dialog {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px;
+  background-color: rgba(0,0,0,.75);
+  .modal {
+    position: relative;
+    max-width: 800px;
+    min-height: 480px;
+    margin: 0 auto;
+    background-color: #fff;
+    &__content {
+      position: absolute;
+      left: 0;
+      max-width: 480px;
+      height: 480px;
+      img {
+        width: 100%;
+      }
+    }
+    &__informations {
+      position: absolute;
+      right: 0;
+      width: calc(800px - 480px - 30px);
+      height: 100%;
+      padding: 15px;
+      &__header {
+        display: flex;
+        align-items: center;
+       
+        .profile-image {
+          img {
+            border-radius: 100%;
+            width: 50px;
+            height: 50px;
+          }
+        }
+        .featured-text {
+          margin-left: 1em;
+        }
+      }
+      &__body {
+        min-height: 250px;
+        .comment {
+          div, p {
+            display: inline;
+          }
+          p {
+            margin-left: .5em;
+          }
+        }
+      }
+      &__footer {
+        height: 50px;
+        .actions-box {
+          display: flex;
+          justify-content: space-between;
+          .far {
+            font-size: 22px;
+          }
+        }
+        .add-comments {
+          position: relative;
+          span {
+            position: absolute;
+            right: 0;
+            font-size: 14px;
+            line-height: 21px;
+          }
+        }
+      }
+    }
+  }
+}
