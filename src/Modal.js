@@ -6,7 +6,127 @@ import instaThree from './img/insta_3.jpg';
 import instaFour from './img/insta_4.jpg';
 import imgProfile from './img/Jullia5.jpg';  
 
+function Input(props) {
+  return (
+    <input type="text" class="input" placeholder="Add a comment..." onKeyPress={props.onKeyPress}/>
+  )
+}
+
+function Comments(props) {
+  const comments = props.comments;
+  var commentsList = comments.map((item) => 
+    <div key={item.toString()} className="comment">
+      <div className="featured-text">{item.user}</div>
+      <p>{item.comment}</p>
+    </div>
+  ); 
+
+  return (
+    <div>
+      {commentsList}
+    </div>
+  );
+}
+
+
 class Modal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.slideNumber = 0;
+
+    this.slide = [{
+      imageContent: instaOne,
+      likes: '88',
+      date: 'Mar 21'
+    },
+    {
+      imageContent: instaTwo,
+      likes: '60',
+      date: 'Mar 21'
+    },
+    {
+      imageContent: instaThree,
+      likes: '88',
+      date: 'Mar 22'
+    },
+    {
+      imageContent: instaFour,
+      likes: '88',
+      date: 'Mar 22'
+    }];
+
+    this.state = {value: '', showComments: false, nextPost: true};
+
+    this.comments = [
+    [
+      {user: 'julliasaad', comment: 'The first fact about me: I love inline skating!'},
+      {user: 'felipefriend', comment: 'Nice!'}
+    ], 
+    [
+      {user: 'julliasaad', comment: 'This is my pet, Wendy!'},
+      {user: 'biafriend', comment: 'Beatufiful <3!'}
+    ],
+    [
+      {user: 'julliasaad', comment: 'She is really crazy!'},
+      {user: 'mateusfriend', comment: 'wow!'}
+    ],
+    [
+      {user: 'julliasaad', comment: 'The first fact about me: I love inline skating!'},
+      {user: 'felipefriend', comment: 'Nice!'}
+    ]];
+
+    this.newComments = [];
+
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.nextPost = this.nextPost.bind(this);
+    this.previousPost = this.previousPost.bind(this);
+  }
+
+  addComment(event) {
+    this.setState({
+      showComments: true,
+    });
+    this.newComments.push(event.target.value);
+    this.cleanInput(event);
+  }
+
+  renderComment() {
+    if (!this.state.showComments) {
+      return null;
+    } else {
+      var commentsList = this.newComments.map((comment) => 
+        <div key={comment.toString()} className="comment">
+          <div className="featured-text">username</div>
+          <p>{comment}</p>
+        </div>
+      ); 
+    }
+    return (
+      <div>
+        {commentsList}
+      </div>
+    );
+  }
+  
+  cleanInput(event) {
+    event.target.value = '';
+  }
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.addComment(event);
+    }
+  }
+
+  nextPost() {
+   
+  }
+
+  previousPost() {
+   
+  }
+
   render() {
     if(!this.props.show) {
       return null;
@@ -14,10 +134,9 @@ class Modal extends React.Component {
 
     return (
       <div className="dialog">
-        <div className="modal">
-          {this.props.children}
+        <div className="modal"> 
           <div className="modal__content">
-            <img src={instaOne} alt=""/>
+            <img src={this.slide[this.slideNumber].imageContent} alt=""/>
           </div>
           <div className="modal__informations">
             <div className="modal__informations__header">
@@ -28,9 +147,9 @@ class Modal extends React.Component {
             </div>
             <hr/>
             <div className="modal__informations__body">
-              <div className="comment">
-                <div class="featured-text">julliasaad</div>
-                <p>The first fact about me: I love inline skating!</p>
+              <Comments comments={this.comments[this.slideNumber]}/>
+              <div>
+                {this.renderComment()}
               </div>
             </div>
             <hr/>
@@ -42,21 +161,21 @@ class Modal extends React.Component {
                 </div>
                 <span class="far fa-bookmark"></span>
               </div>
-              <div class="featured-text mar-top">88 likes</div>
-              <div class="thin-text mar-top">Mar 21</div>
+              <div class="featured-text mar-top">{this.slide[this.slideNumber].likes} likes</div>
+              <div class="thin-text mar-top">{this.slide[this.slideNumber].date}</div>
               <hr/>
               <div className="add-comments">
-                <input type="text" class="input" placeholder="Add a comment..."/>
+                <Input onKeyPress={this.handleKeyPress}/>
                 <span class="fas fa-ellipsis-h"></span>
               </div>
             </div>
           </div>
-          {/* <div className="footer">
-            <button onClick={this.props.onClose}>
-              Close
-            </button>
-          </div> */}
         </div>
+        <span className="fas fa-chevron-left arrow-left" onClick={this.previousPost}></span>
+        <span className="fas fa-chevron-right arrow-right" onClick={this.nextPost}></span>
+        <button className="btn-close" onClick={this.props.onClose}>
+          <span className="fas fa-times"></span>
+        </button>
       </div>
     );
   }
@@ -64,8 +183,7 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
-  children: PropTypes.node
+  show: PropTypes.bool
 };
 
 export default Modal;

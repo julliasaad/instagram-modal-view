@@ -19,8 +19,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button class="btn-insta" onClick={this.toggleModal}>
-          <span class="fab fa-instagram"></span>
+        <button className="btn-insta" onClick={this.toggleModal}>
+          <span className="fab fa-instagram"></span>
         </button>
         <h1>
           <img src={title} alt="Instagram Modal View"/>

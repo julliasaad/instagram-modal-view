@@ -74,4 +74,33 @@
       }
     }
   }
+  .arrow-left {
+    position: absolute;
+    left: 250px;
+    top: 45%;
+    cursor: pointer;
+    color: #fafafa;
+    font-size: 18px;
+  }
+  .arrow-right {
+    position: absolute;
+    right: 250px;
+    top: 45%;
+    cursor: pointer;
+    color: #fafafa;
+    font-size: 18px;
+  }
+  .btn-close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fafafa;
+    font-size: 18px;
+    &:focus {
+      outline: none;
+    }
+  }
 }
