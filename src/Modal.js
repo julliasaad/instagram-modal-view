@@ -47,21 +47,21 @@ class Modal extends React.Component {
     },
     {
       imageContent: instaThree,
-      likes: '88',
+      likes: '20',
       date: 'Mar 22'
     },
     {
       imageContent: instaFour,
-      likes: '88',
+      likes: '42',
       date: 'Mar 22'
     }];
 
-    this.state = {value: '', showComments: false, nextPost: true};
+    this.state = {value: '', showComments: false, previousPost: false, nextPost: false};
 
     this.comments = [
     [
       {user: 'julliasaad', comment: 'The first fact about me: I love inline skating!'},
-      {user: 'felipefriend', comment: 'Nice!'}
+      {user: 'somefriend', comment: 'Nice!'}
     ], 
     [
       {user: 'julliasaad', comment: 'This is my pet, Wendy!'},
@@ -69,18 +69,20 @@ class Modal extends React.Component {
     ],
     [
       {user: 'julliasaad', comment: 'She is really crazy!'},
-      {user: 'mateusfriend', comment: 'wow!'}
+      {user: 'somefriend', comment: 'wow!'}
     ],
     [
-      {user: 'julliasaad', comment: 'The first fact about me: I love inline skating!'},
-      {user: 'felipefriend', comment: 'Nice!'}
+      {user: 'julliasaad', comment: 'I love this game! This is the only game I hve ever finished!'},
+      {user: 'somefriend', comment: 'haha'},
+      {user: 'somefriend', comment: 'Journey? I love this game too'}
     ]];
 
     this.newComments = [];
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.nextPost = this.nextPost.bind(this);
-    this.previousPost = this.previousPost.bind(this);
+    this.seeNextPost = this.seeNextPost.bind(this);
+    this.seePreviousPost = this.seePreviousPost.bind(this);
+    this.renderImage = this.renderImage.bind(this);
   }
 
   addComment(event) {
@@ -108,6 +110,25 @@ class Modal extends React.Component {
       </div>
     );
   }
+
+  renderImage() {
+    if(!this.state.nextPost && !this.state.previousPost) {
+      return (
+        <img src={this.slide[this.slideNumber].imageContent} alt=""/>
+      );
+    } else if(this.state.nextPost) {
+      this.slideNumber++;
+    } else if(this.state.previousPost) {
+      this.slideNumber--;
+    }
+    console.log(this.state.nextPost);
+    console.log(this.state.previousPost);
+    
+    return (
+      <img src={this.slide[this.slideNumber].imageContent} alt="Instagram image"/>
+    );
+    
+  }
   
   cleanInput(event) {
     event.target.value = '';
@@ -119,12 +140,18 @@ class Modal extends React.Component {
     }
   }
 
-  nextPost() {
-   
+  seeNextPost() {
+    this.setState({
+      nextPost: true,
+      previousPost: false
+    });
   }
 
-  previousPost() {
-   
+  seePreviousPost() {
+    this.setState({
+      nextPost: false,
+      previousPost: true
+    });
   }
 
   render() {
@@ -136,7 +163,7 @@ class Modal extends React.Component {
       <div className="dialog">
         <div className="modal"> 
           <div className="modal__content">
-            <img src={this.slide[this.slideNumber].imageContent} alt=""/>
+            {this.renderImage()}
           </div>
           <div className="modal__informations">
             <div className="modal__informations__header">
@@ -171,8 +198,8 @@ class Modal extends React.Component {
             </div>
           </div>
         </div>
-        <span className="fas fa-chevron-left arrow-left" onClick={this.previousPost}></span>
-        <span className="fas fa-chevron-right arrow-right" onClick={this.nextPost}></span>
+        <span className="fas fa-chevron-left arrow-left" onClick={this.seePreviousPost}></span>
+        <span className="fas fa-chevron-right arrow-right" onClick={this.seeNextPost}></span>
         <button className="btn-close" onClick={this.props.onClose}>
           <span className="fas fa-times"></span>
         </button>
