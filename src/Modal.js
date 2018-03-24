@@ -117,9 +117,17 @@ class Modal extends React.Component {
         <img src={this.slide[this.slideNumber].imageContent} alt=""/>
       );
     } else if(this.state.nextPost) {
-      this.slideNumber++;
+      if(this.slideNumber == '3') {
+        this.slideNumber = 0;
+      } else {
+        this.slideNumber++;
+      }
     } else if(this.state.previousPost) {
-      this.slideNumber--;
+      if(this.slideNumber == '0') {
+        this.slideNumber = 3;
+      } else {
+        this.slideNumber--;
+      }
     }
     console.log(this.state.nextPost);
     console.log(this.state.previousPost);
