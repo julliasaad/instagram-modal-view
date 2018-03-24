@@ -72,7 +72,7 @@ class Modal extends React.Component {
       {user: 'somefriend', comment: 'wow!'}
     ],
     [
-      {user: 'julliasaad', comment: 'I love this game! This is the only game I hve ever finished!'},
+      {user: 'julliasaad', comment: 'I love this game! This is the only game I have ever finished!'},
       {user: 'somefriend', comment: 'haha'},
       {user: 'somefriend', comment: 'Journey? I love this game too'}
     ]];
@@ -129,9 +129,6 @@ class Modal extends React.Component {
         this.slideNumber--;
       }
     }
-    console.log(this.state.nextPost);
-    console.log(this.state.previousPost);
-    
     return (
       <img src={this.slide[this.slideNumber].imageContent} alt="Instagram image"/>
     );
