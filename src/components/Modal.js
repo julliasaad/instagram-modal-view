@@ -1,10 +1,146 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import instaOne from './img/insta_1.jpg'; 
-import instaTwo from './img/insta_2.jpg'; 
-import instaThree from './img/insta_3.jpg'; 
-import instaFour from './img/insta_4.jpg';
-import imgProfile from './img/Jullia5.jpg';  
+import instaOne from '../img/insta_1.jpg'; 
+import instaTwo from '../img/insta_2.jpg'; 
+import instaThree from '../img/insta_3.jpg'; 
+import instaFour from '../img/insta_4.jpg';
+import imgProfile from '../img/Jullia5.jpg';  
+import styled from 'styled-components';
+
+const Dialog = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px;
+  background-color: rgba(0,0,0,.75);
+`;
+
+const ModalContainer = styled.div`
+  position: relative;
+  max-width: 800px;
+  min-height: 480px;
+  margin: 0 auto;
+  background-color: #fff;
+`;
+
+const ModalContent = styled.div`
+  position: absolute;
+  left: 0;
+  max-width: 380px;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  background-color: #000;
+  img {
+    width: 100%;
+  }
+  @media(min-width:768px){
+    display: flex;
+    align-items: center;
+    max-width: 420px;
+    height: 480px;
+  }
+  @media(min-width:992px){
+    max-width: 480px;
+    height: 480px;
+  } 
+`;
+
+const ModalInformations = styled.div`
+  position: absolute;
+  right: 0;
+  width: calc(800px - 510px - 30px);
+  height: 100%;
+  padding: 15px;
+  @media(min-width:768px){
+    max-width: calc(800px - 420px - 30px);
+  }
+  @media(min-width:992px){
+    width: calc(800px - 480px - 30px);
+  }
+`;
+
+const InformationsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  .profile-image {
+    img {
+      border-radius: 100%;
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .featured-text {
+    margin-left: 1em;
+  }
+`;
+
+const InformationsBody = styled.div`
+  min-height: 250px;
+  .comment {
+    div, p {
+      display: inline;
+    }
+    p {
+      margin-left: .5em;
+    }
+  }
+`;
+
+const InformationsFooter = styled.div`
+  height: 50px;
+  .actions-box {
+    display: flex;
+    justify-content: space-between;
+    .far {
+      font-size: 22px;
+    }
+  }
+  .add-comments {
+    position: relative;
+    span {
+      position: absolute;
+      right: 0;
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
+`;
+
+const PreviousPost = styled.span`
+  position: absolute;
+  left: 250px;
+  top: 45%;
+  cursor: pointer;
+  color: #fafafa;
+  font-size: 18px;
+`;
+
+const NextPost = styled.span`
+  position: absolute;
+  right: 250px;
+  top: 45%;
+  cursor: pointer;
+  color: #fafafa;
+  font-size: 18px;
+`;
+
+const CloseModal = styled.button`
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fafafa;
+    font-size: 18px;
+    &:focus {
+      outline: none;
+    }
+`;
+
 
 function Input(props) {
   return (
@@ -165,27 +301,27 @@ class Modal extends React.Component {
     }
 
     return (
-      <div className="dialog">
-        <div className="modal"> 
-          <div className="modal__content">
+      <Dialog className="dialog">
+        <ModalContainer className="modal"> 
+          <ModalContent className="modal__content">
             {this.renderImage()}
-          </div>
-          <div className="modal__informations">
-            <div className="modal__informations__header">
+          </ModalContent>
+          <ModalInformations className="modal__informations">
+            <InformationsHeader className="modal__informations__header">
               <div className="profile-image">
                 <img src={imgProfile} alt=""/>
               </div>
               <h3 class="featured-text">julliasaad</h3>
-            </div>
+            </InformationsHeader>
             <hr/>
-            <div className="modal__informations__body">
+            <InformationsBody className="modal__informations__body">
               <Comments comments={this.comments[this.slideNumber]}/>
               <div>
                 {this.renderComment()}
               </div>
-            </div>
+            </InformationsBody>
             <hr/>
-            <div className="modal__informations__footer">
+            <InformationsFooter className="modal__informations__footer">
               <div className="actions-box">
                 <div class="left">
                   <span class="far fa-heart"></span>
@@ -200,15 +336,15 @@ class Modal extends React.Component {
                 <Input onKeyPress={this.handleKeyPress}/>
                 <span class="fas fa-ellipsis-h"></span>
               </div>
-            </div>
-          </div>
-        </div>
-        <span className="fas fa-chevron-left arrow-left" onClick={this.seePreviousPost}></span>
-        <span className="fas fa-chevron-right arrow-right" onClick={this.seeNextPost}></span>
-        <button className="btn-close" onClick={this.props.onClose}>
+            </InformationsFooter>
+          </ModalInformations>
+        </ModalContainer>
+        <PreviousPost className="fas fa-chevron-left arrow-left" onClick={this.seePreviousPost}></PreviousPost>
+        <NextPost className="fas fa-chevron-right arrow-right" onClick={this.seeNextPost}></NextPost>
+        <CloseModal className="btn-close" onClick={this.props.onClose}>
           <span className="fas fa-times"></span>
-        </button>
-      </div>
+        </CloseModal>
+      </Dialog>
     );
   }
 }
