@@ -7,7 +7,7 @@
 #### 1. Clone the repository
 
 #### 2. Open the repository folder created
-` instagram-modal-view
+` cd instagram-modal-view
 `
 
 #### 3. Install dependencies
@@ -22,4 +22,4 @@
 `Access the http://localhost:3000/
 `
 
-#### 6. Great, the app is running! <3
+#### 6. Great, the aplication is running! <3
